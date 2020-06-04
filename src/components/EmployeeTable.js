@@ -17,8 +17,8 @@ function EmployeeTable(props) {
                 </tr>
             </thead>
             <tbody>
-                {props.people.map(person => (
-                    <tr key={person.phone}>
+                {props.people.map((person, idx) => (
+                    <tr key={idx}>
                         <td><img alt="Profile" src={person.picture.medium} /></td>
                         <td>{person.name.first}</td>
                         <td>{person.name.last}</td>

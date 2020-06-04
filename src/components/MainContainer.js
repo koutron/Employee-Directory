@@ -26,6 +26,7 @@ class MainContainer extends React.Component {
       [name]: value
     });
 
+    
     this.filterResults();
   }
 
@@ -37,7 +38,6 @@ class MainContainer extends React.Component {
         return person;
       }
     });
-
     this.setState({ people: filteredPeople });
   }
 
