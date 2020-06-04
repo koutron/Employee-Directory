@@ -6,13 +6,13 @@ function EmployeeTable(props) {
             <thead>
                 <tr>
                     <th>Profile</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th onClick={() => props.sorting("name", "first")}>First Name</th>
+                    <th onClick={() => props.sorting("name", "last")}>Last Name</th>
                     <th>Phone</th>
                     <th>Email</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Country</th>
+                    <th onClick={() => props.sorting("location", "city")}>City</th>
+                    <th onClick={() => props.sorting("location", "state")}>State</th>
+                    <th onClick={() => props.sorting("location", "country")}>Country</th>
                     <th>DOB</th>
                 </tr>
             </thead>

@@ -9,9 +9,13 @@ class MainContainer extends React.Component {
     search: ""
   }
 
+  originalPeople = [];
+  ascending = true;
+
   searchPeople() {
     API.search().then(res => {
       this.setState({ people: res.data.results });
+      this.originalPeople = res.data.results;
     });
   }
 
@@ -26,18 +30,50 @@ class MainContainer extends React.Component {
   }
 
   filterResults() {
+    this.setState({ people: this.originalPeople });
+    // eslint-disable-next-line
     const filteredPeople = this.state.people.filter(person => {
-      console.log(person);
-      if(person.name.last.includes(this.state.search)){
+      if (person.name.last.includes(this.state.search)) {
         return person;
       }
     });
 
-    this.setState({people: filteredPeople})
+    this.setState({ people: filteredPeople });
   }
 
   componentDidMount() {
     this.searchPeople();
+  }
+
+  sorting = (prop1, prop2) => {
+    if (this.ascending) {
+      this.state.people.sort(function (a, b) {
+        let nameA = a[prop1][prop2].toUpperCase();
+        let nameB = b[prop1][prop2].toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      this.setState({ people: this.state.people });
+    } else {
+      this.state.people.sort(function (a, b) {
+        let nameA = a[prop1][prop2].toUpperCase();
+        let nameB = b[prop1][prop2].toUpperCase();
+        if (nameA < nameB) {
+          return 1;
+        }
+        if (nameA > nameB) {
+          return -1;
+        }
+        return 0;
+      });
+      this.setState({ people: this.state.people });
+    }
+    this.ascending = !this.ascending;
   }
 
   render() {
@@ -47,7 +83,7 @@ class MainContainer extends React.Component {
           value={this.state.search}
           handleInputChange={this.handleInputChange}
         />
-        <EmployeeTable people={this.state.people} />
+        <EmployeeTable people={this.state.people} sorting={this.sorting} />
       </div>
     )
   }
