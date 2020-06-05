@@ -31,9 +31,9 @@ class MainContainer extends React.Component {
   }
 
   filterResults() {
-    this.setState({ people: this.originalPeople });
+    //this.setState({ people: this.originalPeople });
     // eslint-disable-next-line
-    const filteredPeople = this.state.people.filter(person => {
+    const filteredPeople = this.originalPeople.filter(person => {
       if (person.name.last.includes(this.state.search)) {
         return person;
       }
@@ -78,7 +78,11 @@ class MainContainer extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
+        <div className="jumbotron">
+          <h1 className="display-4">Employee Directory</h1>
+          <p className="lead">This is an employee directory built with React.  Search employees by their last name and sort the table by first name, last name, city, state, or country.</p>
+        </div>
         <SearchForm
           value={this.state.search}
           handleInputChange={this.handleInputChange}

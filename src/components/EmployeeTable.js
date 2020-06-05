@@ -1,9 +1,12 @@
 import React from "react";
 
 function EmployeeTable(props) {
+
+    // -- FILTER STATE DATA -- //
+    
     return (
-        <table>
-            <thead>
+        <table className="table table-striped">
+            <thead className="thead-dark">
                 <tr>
                     <th>Profile</th>
                     <th onClick={() => props.sorting("name", "first")}>First Name</th>
