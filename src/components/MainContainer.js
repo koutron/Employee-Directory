@@ -6,7 +6,8 @@ import SearchForm from "./SearchForm";
 class MainContainer extends React.Component {
   state = {
     people: [],
-    search: ""
+    search: "",
+    filteredPeople: []
   }
 
   originalPeople = [];
@@ -15,7 +16,8 @@ class MainContainer extends React.Component {
   searchPeople() {
     API.search().then(res => {
       this.setState({ people: res.data.results });
-      this.originalPeople = res.data.results;
+      this.setState({ filteredPeople: res.data.results });
+      //this.originalPeople = res.data.results;
     });
   }
 
@@ -24,21 +26,27 @@ class MainContainer extends React.Component {
 
     this.setState({
       [name]: value
-    });
+    }, this.filterResults)
 
-    
-    this.filterResults();
+    console.log("ok")
+
   }
 
   filterResults() {
+    console.log("filter")
     //this.setState({ people: this.originalPeople });
     // eslint-disable-next-line
-    const filteredPeople = this.originalPeople.filter(person => {
-      if (person.name.last.includes(this.state.search)) {
-        return person;
-      }
-    });
-    this.setState({ people: filteredPeople });
+    if( !this.state.search.length ){
+      console.log("empty search")
+      this.setState({ filteredPeople: this.state.people })
+    } else {
+      const newFiltered = this.state.people.filter(person => {
+        if (person.name.last.includes(this.state.search)) {
+          return person;
+        }
+      });
+      this.setState({ filteredPeople: newFiltered });
+    }
   }
 
   componentDidMount() {
@@ -87,7 +95,7 @@ class MainContainer extends React.Component {
           value={this.state.search}
           handleInputChange={this.handleInputChange}
         />
-        <EmployeeTable people={this.state.people} sorting={this.sorting} />
+        <EmployeeTable people={this.state.filteredPeople} sorting={this.sorting} />
       </div>
     )
   }
