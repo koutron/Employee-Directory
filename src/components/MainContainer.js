@@ -28,16 +28,16 @@ class MainContainer extends React.Component {
       [name]: value
     }, this.filterResults)
 
-    console.log("ok")
+    
 
   }
 
   filterResults() {
-    console.log("filter")
+    
     //this.setState({ people: this.originalPeople });
     // eslint-disable-next-line
     if( !this.state.search.length ){
-      console.log("empty search")
+     
       this.setState({ filteredPeople: this.state.people })
     } else {
       const newFiltered = this.state.people.filter(person => {
